@@ -6,6 +6,8 @@ const ProductCreatedListner = require('./product-created-listener')
 
 const myEmitter = require('./eventEmitter')
 
+const PORT = process.env.PORT || 3000
+
 app.use(cors())
 app.use(express.json())
 
@@ -29,8 +31,8 @@ const start = async () => {
 
         new ProductCreatedListner(natsWrapper.getClient()).listen()
 
-        app.listen(3001, () => {
-            console.log("Server listening on port 3001")
+        app.listen(PORT, () => {
+            console.log("Server listening on port ", PORT)
         })
     } catch (err) {
         console.log(err)
