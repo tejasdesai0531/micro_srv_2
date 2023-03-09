@@ -4,8 +4,23 @@ const natsWrapper = require('./nats_wrapper')
 const cors = require('cors')
 const ProductCreatedListner = require('./product-created-listener')
 
+const myEmitter = require('./eventEmitter')
+
 app.use(cors())
 app.use(express.json())
+
+let products = []
+
+myEmitter.on('product-received', (data) => {
+    console.log("Product Received : ", data)
+    products.push(data)
+})
+
+app.get('/api/order/product', (req, res) => {
+    res.send({
+        products: products
+    })
+})
 
 const start = async () => {
 
